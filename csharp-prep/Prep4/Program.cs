@@ -45,7 +45,7 @@ class Program
 
         Console.WriteLine($"The average is: {average}");
 
-        //Computing the sum
+        //Computing the max number
 
         int max = numbers[0];
 
