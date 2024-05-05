@@ -29,9 +29,8 @@ class Program
 
             if (userOption ==1)
             {
-                //insert prompt here
                 Console.Write("Your Response: ");
-                string response = Console.ReadLine();
+                string x = Console.ReadLine();
                 journal.AddEntry(new Entry());
             }
             else if (userOption ==2)

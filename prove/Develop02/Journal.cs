@@ -4,7 +4,7 @@ public class Journal
 {
     public List<Entry> _entries;
 
-    public void AddEntry(Entry newEntry)
+    public void AddEntry(Entry entry)
     {
         Entry userEntry = new Entry();
         userEntry.GenerateDate();
@@ -29,7 +29,7 @@ public class Journal
     {
         using (StreamWriter outputFile = new StreamWriter ("myFile.txt", true))
         {  
-            if ("myFile.txt".EndsWith (".csv"))
+            if ("myFile.txt".EndsWith (".txt"))
             {
                 foreach (Entry entry in _entries)
                 {
@@ -51,7 +51,7 @@ public class Journal
     
     public void LoadFromFile(string file)
     {
-        if ("myFile.txt".EndsWith(".csv"))
+        if ("myFile.txt".EndsWith(".txt"))
         {
             string[] lines = System.IO.File.ReadAllLines("myFile.txt");
             foreach (string line in lines)
