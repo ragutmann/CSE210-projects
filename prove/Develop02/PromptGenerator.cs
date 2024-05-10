@@ -1,22 +1,41 @@
-public class PromptGenerator
+using System;
+
+namespace JournalApp
 {
-    public List<string> _prompts;
-    public string GetRandomPrompt()
+    class PromptGenerator
     {
-        _prompts = new List<string>();
+        public string GenerateMainMenu()
+        {
+            return "1. Add Entry\n" +
+                   "2. View All Entries\n" +
+                   "3. Search Entries by Date\n" +
+                   "4. Exit";
+        }
 
-        _prompts.Add("Who was the most interesting person I interacted with today?");
-        _prompts.Add("What was the best part of my day?");
-        _prompts.Add("List the 3 things you are grateful for today and why?");
-        _prompts.Add("What went well today?");
-        _prompts.Add("Who do you wish you had talked to today? What would you say?");
-        _prompts.Add("What is one thing you want to remember from today?");
-        _prompts.Add("What negative emotions am I holding onto? How can I let them go?");
+        public string GenerateEntryPrompt()
+        {
+            return "Enter date (MM/DD/YYYY): ";
+        }
 
-        Random randomGenerator = new Random();
-        int index = randomGenerator.Next(_prompts.Count);
+        public string GenerateSearchPrompt()
+        {
+            return "Enter date to search (MM/DD/YYYY): ";
+        }
 
+        public DateTime GetDateFromUser()
+        {
+            DateTime date;
+            while (!DateTime.TryParse(Console.ReadLine(), out date))
+            {
+                Console.WriteLine("Invalid date format. Please enter in MM/DD/YYYY format.");
+            }
+            return date;
+        }
 
-        return _prompts[index]; 
+        public string GetContentFromUser()
+        {
+            Console.Write("Enter journal entry content: ");
+            return Console.ReadLine();
+        }
     }
 }
