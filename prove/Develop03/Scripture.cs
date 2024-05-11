@@ -20,13 +20,11 @@ public class Scripture
 
     public void HideRandomWords(int numberToHide)
     {
-        // Code to hide random words
         Random random = new Random ();
         int count = _words.Count;
 
         if (count <= numberToHide)
         {
-            // Hide all words if numberToHide is greater than or equal to count
             foreach (Word word in _words)
             {
                 word.Hide();
@@ -35,7 +33,6 @@ public class Scripture
 
         else
         {
-            // Hide random words
             HashSet<int> indicesToHide = new HashSet<int>();
             while (indicesToHide.Count < numberToHide)
             {
@@ -58,7 +55,6 @@ public class Scripture
 
     public string GetDisplayText()
     {
-        // Code to get the display text of the scripture
         string displayText = " ";
         foreach (Word word in _words)
         {
@@ -69,15 +65,14 @@ public class Scripture
 
     public bool IsCompletelyHidden()
     {
-        // Code to check if all words are hidden
         foreach (Word word in _words)
         {
             if (!word.IsHidden())
             {
-                return false; // If any word is not hidden, return false
+                return false; 
             }
         }
-        return true; // If all words are hidden, return true
+        return true; 
     }
 
     internal object GetReference()

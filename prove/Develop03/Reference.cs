@@ -25,7 +25,6 @@ public class Reference
 
     public string GetDisplayText()
     {
-        // Code to get the display text of the reference
         if (_endVerse == 0)
         {
             return $"{_book} {_chapter}:{_verse}";
