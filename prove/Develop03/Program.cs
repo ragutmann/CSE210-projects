@@ -14,28 +14,28 @@ class Program
         scripture.GetDisplayText();
 
         while (true)
-       {
+        {
            Console.WriteLine("Press enter to hide a word or type quit to exit:");
            string userInput = Console.ReadLine();
 
 
            if (userInput.ToLower() == "quit")
            {
-               break;
+                break;
            }
            else
            {
-            Scripture scripture1 = new Scripture();
-               Console.Clear();
-               scripture1.HideRandomWords();
-               scripture1.GetDisplayText();
+                Scripture scripture1 = new Scripture ();
+                Console.Clear();
+                scripture1.HideRandomWords();
+                scripture1.GetDisplayText();
 
 
-               if (scripture.IsCompletelyHidden())
-               {
-                   Console.WriteLine("Congratulations, you have memorized the scripture!");
-                   break;
-               }
+                if (scripture.IsCompletelyHidden())
+                {
+                    Console.WriteLine("Congratulations, you have memorized the scripture!");
+                    break;
+                }
            }
        }
     }
