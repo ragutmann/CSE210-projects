@@ -77,6 +77,6 @@ public class Scripture
 
     internal object GetReference()
     {
-        throw new NotImplementedException();
+        return "John 3:16";
     }
 }
