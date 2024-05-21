@@ -40,7 +40,8 @@ class Program
 
             else if (choice == "3")
             {
-                Console.WriteLine("Starting Listing Activity...");
+                Console.WriteLine("Welcome to the Listing Activity.");
+                Console.WriteLine();
                 ListingActivity listingActivity = new ListingActivity(60); // Assuming 60 seconds duration for listing activity
                 listingActivity.Run();
             }

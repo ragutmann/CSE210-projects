@@ -15,24 +15,45 @@ public class ListingActivity : Activity
     {
         DisplayStartingMessage();
 
-        Console.WriteLine($"You have {_duration} seconds to list as many items as you can.");
+        Console.WriteLine();
+        Console.WriteLine($"How long, in seconds, would you like for your session?");
+        int _duration = int.Parse(Console.ReadLine());
+        Console.WriteLine();
 
         GetRandomPrompt();
 
         List<string> userResponses = GetListFromUser();
 
+        Console.WriteLine();
         Console.WriteLine($"You listed {userResponses.Count} items.");
 
+        Console.WriteLine();
         DisplayEndingMessage();
+        Console.WriteLine();
     }
 
     public void GetRandomPrompt()
     {
         Random rnd = new Random();
         int index = rnd.Next(_prompts.Count);
-        Console.WriteLine($"Prompt: {_prompts[index]}");
+
+        Console.WriteLine($"---. {_prompts[index]} .---");
+        Console.WriteLine();
+
         Console.WriteLine($"You have {_duration} seconds to think about the prompt before listing items.");
-        ShowCountDown(5); // Give 5 seconds countdown before listing items
+        Console.WriteLine();
+
+        for (int i = 5; i > 0; i--)
+        {
+            Console.Write($"\rYou can start in {i} seconds |"); Thread.Sleep(250);
+            Console.Write($"\rYou can start in {i} seconds /"); Thread.Sleep(250);
+            Console.Write($"\rYou can start in {i} seconds -"); Thread.Sleep(250);
+            Console.Write($"\rYou can start in {i} seconds \\"); Thread.Sleep(250);
+        }
+
+        Console.WriteLine();
+        
+
     }
 
     public List<string> GetListFromUser()
@@ -40,8 +61,11 @@ public class ListingActivity : Activity
         List<string> userResponses = new List<string>();
         DateTime startTime = DateTime.Now;
 
+        Console.WriteLine();
+
         while ((DateTime.Now - startTime).TotalSeconds < _duration)
         {
+
             Console.Write("Enter an item: ");
             string response = Console.ReadLine();
             userResponses.Add(response);
