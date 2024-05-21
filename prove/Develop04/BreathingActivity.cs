@@ -19,22 +19,21 @@ public class BreathingActivity : Activity
 
         DateTime startTime = DateTime.Now;
 
-        Console.WriteLine($"Starting in 5 seconds...");
-
-        // Show countdown with loading animation
+        // Show countdown with loading animation before starting breathe in and out
         for (int i = 5; i > 0; i--)
         {
-            Console.Write($"\rStarting in {i} seconds |"); Thread.Sleep(250);
-            Console.Write($"\rStarting in {i} seconds /"); Thread.Sleep(250);
-            Console.Write($"\rStarting in {i} seconds -"); Thread.Sleep(250);
-            Console.Write($"\rStarting in {i} seconds \\"); Thread.Sleep(250);
+            Console.Write($"\rGet ready!... Starting in {i} seconds |"); Thread.Sleep(250);
+            Console.Write($"\rGet ready!... Starting in {i} seconds /"); Thread.Sleep(250);
+            Console.Write($"\rGet ready!... Starting in {i} seconds -"); Thread.Sleep(250);
+            Console.Write($"\rGet ready!... Starting in {i} seconds \\"); Thread.Sleep(250);
+            
         }
-        Console.WriteLine("\rStarting in 1 second ");
         Console.WriteLine();
 
         // Loop until the specified duration entered by user is reached
         while ((DateTime.Now - startTime).TotalSeconds < duration)
         {
+            Console.WriteLine();
             Console.WriteLine("Breathe in...");
             ShowCountDown(3); // Count down 3 seconds
             Console.WriteLine();
@@ -49,4 +48,6 @@ public class BreathingActivity : Activity
         Console.WriteLine();
 
     }
+
+    
 }

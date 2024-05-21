@@ -19,22 +19,50 @@ public class ReflectingActivity : Activity
     {
         DisplayStartingMessage();
 
-        Console.WriteLine($"You have {_duration} seconds to reflect on times when you showed strength and resilience.");
+        Console.WriteLine();
+        Console.WriteLine("How long, in seconds, would you like for your session?");
+        int duration = int.Parse(Console.ReadLine());
 
-        string prompt = GetRandomPrompt();
-        string question = GetRandomQuestion();
+        Console.WriteLine();
+        Console.WriteLine($"Follow the instructions to reflect for {duration} seconds...");
+        Console.WriteLine();
 
-        Console.WriteLine($"Prompt: {prompt}");
-
-        Console.WriteLine($"Reflecting on: {question}");
-
-        foreach (string q in _questions)
+        // Show countdown with loading animation
+        for (int i = 5; i > 0; i--)
         {
-            Console.WriteLine($"Question: {q}");
-            ShowSpinner(3); // Pause for 3 seconds and display a spinner
+            Console.Write($"\rStarting in {i} seconds |"); Thread.Sleep(250);
+            Console.Write($"\rStarting in {i} seconds /"); Thread.Sleep(250);
+            Console.Write($"\rStarting in {i} seconds -"); Thread.Sleep(250);
+            Console.Write($"\rStarting in {i} seconds \\"); Thread.Sleep(250);
         }
 
+        Console.WriteLine();
+        DateTime startTime = DateTime.Now;
+
+        // Loop until the specified duration is reached
+        while ((DateTime.Now - startTime).TotalSeconds < duration)
+        {
+            string prompt = GetRandomPrompt();
+            string question = GetRandomQuestion();
+
+            Console.WriteLine();
+            Console.WriteLine($"---.{prompt}.---");
+            Console.WriteLine();
+            Console.WriteLine($"When you have something in mind, pess enter to continue.");
+            Console.ReadLine();
+
+            foreach (string q in _questions)
+            {
+                Console.WriteLine($"Question: {q}");
+                ShowSpinner(5); // Pause for 5 seconds and display a spinner
+                Console.WriteLine();
+            }
+        }
+
+        Console.WriteLine("Well done!!.");
+        Console.WriteLine();
         DisplayEndingMessage();
+        Console.WriteLine();
     }
 
     public string GetRandomPrompt()

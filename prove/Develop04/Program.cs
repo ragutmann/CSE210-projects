@@ -24,7 +24,6 @@ class Program
 
             if (choice == "1")
             {
-                Console.WriteLine();
                 Console.WriteLine("Welcome to the Breathing Activity.");
                 Console.WriteLine();
                 BreathingActivity breathingActivity = new BreathingActivity(60); // Assuming 60 seconds duration for breathing activity
@@ -33,7 +32,8 @@ class Program
 
             else if (choice == "2")
             {
-                Console.WriteLine("Starting Reflecting Activity...");
+                Console.WriteLine("Welcome to the Reflecting Activity.");
+                Console.WriteLine();
                 ReflectingActivity reflectingActivity = new ReflectingActivity(60); // Assuming 60 seconds duration for reflecting activity
                 reflectingActivity.Run();
             }
