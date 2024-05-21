@@ -27,7 +27,7 @@ public class ReflectingActivity : Activity
         Console.WriteLine($"Follow the instructions to reflect for {duration} seconds...");
         Console.WriteLine();
 
-        // Show countdown with loading animation
+        // Show countdown with loading animation before listing starts
         for (int i = 5; i > 0; i--)
         {
             Console.Write($"\rStarting in {i} seconds |"); Thread.Sleep(250);
@@ -39,7 +39,7 @@ public class ReflectingActivity : Activity
         Console.WriteLine();
         DateTime startTime = DateTime.Now;
 
-        // Loop until the specified duration is reached
+        // Loop until the specified duration entered by user is reached
         while ((DateTime.Now - startTime).TotalSeconds < duration)
         {
             string prompt = GetRandomPrompt();
@@ -54,7 +54,7 @@ public class ReflectingActivity : Activity
             foreach (string q in _questions)
             {
                 Console.WriteLine($"Question: {q}");
-                ShowSpinner(5); // Pause for 5 seconds and display a spinner
+                ShowSpinner(5);
                 Console.WriteLine();
             }
         }
