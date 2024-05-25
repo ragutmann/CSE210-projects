@@ -113,8 +113,8 @@ public class GoalManager
                 }
             }
 
-            Console.WriteLine();
-            Console.WriteLine($"Total points earned: {totalPoints}");
+            // Console.WriteLine();
+            // Console.WriteLine($"Total points earned: {totalPoints}");
             Console.WriteLine();
             Console.WriteLine("Goals loaded successfully.");
         }
@@ -253,9 +253,9 @@ public class GoalManager
                 _goals.Add(new ChecklistGoal(name, description, points, target, bonus));
                 Console.WriteLine("Checklist goal created successfully.");
                 break;
-            default:
-                Console.WriteLine("Invalid goal type.");
-                break;
+            // default:
+            //     Console.WriteLine("Invalid goal type.");
+            //     break;
         }
     }
 }
