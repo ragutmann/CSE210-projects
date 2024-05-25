@@ -174,9 +174,11 @@ public class GoalManager
         {
             Console.WriteLine("Enter the target for the checklist goal:");
             target = int.Parse(Console.ReadLine());
+            Console.WriteLine();
 
             Console.WriteLine("Enter the bonus for the checklist goal:");
             bonus = int.Parse(Console.ReadLine());
+            Console.WriteLine();
         }
 
         switch (type.ToLower())
@@ -261,9 +263,9 @@ public class GoalManager
                 _goals.Add(new ChecklistGoal(name, description, points, target, bonus));
                 Console.WriteLine("Checklist goal created successfully.");
                 break;
-            default:
-                Console.WriteLine("Invalid goal type.");
-                break;
+            // default:
+            //     Console.WriteLine("Invalid goal type.");
+            //     break;
         }
     }
 
