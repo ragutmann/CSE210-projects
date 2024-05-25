@@ -20,6 +20,7 @@ public class GoalManager
             DisplayMenu();
             Console.Write("Enter your choice: ");
             string choice = Console.ReadLine();
+            Console.WriteLine();
 
             switch (choice)
             {
@@ -44,8 +45,10 @@ public class GoalManager
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
                     break;
+
             }
         }
+        
     }
 
     private void RecordEvent()
@@ -102,6 +105,7 @@ public class GoalManager
     {
         Console.WriteLine("Enter the filename to save goals to:");
         string filename = Console.ReadLine();
+        Console.WriteLine();
 
         try
         {
@@ -139,15 +143,19 @@ public class GoalManager
     {
         Console.WriteLine("Enter the type of goal (Simple, Eternal, or Checklist):");
         string type = Console.ReadLine();
+        Console.WriteLine();
 
         Console.WriteLine("Enter the name of the goal:");
         string name = Console.ReadLine();
+        Console.WriteLine();
 
         Console.WriteLine("Enter the description of the goal:");
         string description = Console.ReadLine();
+        Console.WriteLine();
 
         Console.WriteLine("Enter the points for the goal:");
         int points = int.Parse(Console.ReadLine());
+        Console.WriteLine();
 
         int target = 0;
         int bonus = 0;
@@ -195,26 +203,30 @@ public class GoalManager
     public void DisplayMenu()
     {
         Console.WriteLine("\nMenu Options:");
+        Console.WriteLine();
         Console.WriteLine("1. Create New Goal");
         Console.WriteLine("2. List Goals");
         Console.WriteLine("3. Save Goals");
         Console.WriteLine("4. Load Goals");
         Console.WriteLine("5. Record Event");
         Console.WriteLine("6. Quit");
+        Console.WriteLine();
     }
 
     public void ListGoalNames()
     {
-        Console.WriteLine("\nGoal Names:");
+        Console.WriteLine("Goal Names:");
+        Console.WriteLine();
         foreach (Goal goal in _goals)
         {
             Console.WriteLine(goal._shortName);
         }
+        Console.WriteLine();
     }
 
     public void ListGoalDetails()
     {
-        Console.WriteLine("\nGoal Details:");
+        Console.WriteLine("Goal Details:");
         foreach (Goal goal in _goals)
         {
             Console.WriteLine(goal.GetDetailsString());
@@ -259,41 +271,41 @@ public class GoalManager
         }
     }
 
-    public void SaveGoals(string filename)
-    {
-       try
-        {
-            using (StreamWriter writer = new StreamWriter(filename))
-            {
-                foreach (Goal goal in _goals)
-                {
-                    writer.WriteLine(goal.GetType().Name); // Write the type of the goal
-                    writer.WriteLine(goal._shortName);
-                    writer.WriteLine(goal._description);
-                    writer.WriteLine(goal._points);
+    // public void SaveGoals(string filename)
+    // {
+    //    try
+    //     {
+    //         using (StreamWriter writer = new StreamWriter(filename))
+    //         {
+    //             foreach (Goal goal in _goals)
+    //             {
+    //                 writer.WriteLine(goal.GetType().Name); // Write the type of the goal
+    //                 writer.WriteLine(goal._shortName);
+    //                 writer.WriteLine(goal._description);
+    //                 writer.WriteLine(goal._points);
 
-                    // If the goal is a ChecklistGoal, write target and bonus values
-                    if (goal is ChecklistGoal checklistGoal)
-                    {
-                        writer.WriteLine(checklistGoal._target);
-                        writer.WriteLine(checklistGoal._bonus);
-                    }
-                    else
-                    {
-                        // For other types of goals, write default values
-                        writer.WriteLine("0"); // Placeholder for target
-                        writer.WriteLine("0"); // Placeholder for bonus
-                    }
-                }
-            }
+    //                 // If the goal is a ChecklistGoal, write target and bonus values
+    //                 if (goal is ChecklistGoal checklistGoal)
+    //                 {
+    //                     writer.WriteLine(checklistGoal._target);
+    //                     writer.WriteLine(checklistGoal._bonus);
+    //                 }
+    //                 else
+    //                 {
+    //                     // For other types of goals, write default values
+    //                     writer.WriteLine("0"); // Placeholder for target
+    //                     writer.WriteLine("0"); // Placeholder for bonus
+    //                 }
+    //             }
+    //         }
 
-            Console.WriteLine("Goals saved successfully.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error saving goals: {ex.Message}");
-        }
-    }
+    //         Console.WriteLine("Goals saved successfully.");
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Console.WriteLine($"Error saving goals: {ex.Message}");
+    //     }
+    // }
 
     public void LoadGoals(string filename)
     {
