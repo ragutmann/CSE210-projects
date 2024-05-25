@@ -1,8 +1,12 @@
 public abstract class Goal
 {
-    public string _shortName;
-    public string _description;
-    public int _points;
+    protected string _shortName;
+    protected string _description;
+    protected int _points;
+
+    protected int _targets;
+
+    protected int _bonuses;
 
     public Goal(string name, string description, int points)
     {
@@ -21,4 +25,32 @@ public abstract class Goal
     }
 
     public abstract string GetStringRepresentation();
+
+    public string GetShortName()
+    {
+        return _shortName;
+    }
+
+    public string GetDescription()
+    {
+        return _description;
+    }
+
+
+    public int GetPoints()
+    {
+        return _points;
+    }
+
+    public int GetTarget()
+    {
+        return _targets;
+    }
+
+    public int GetBonus()
+    {
+        return _bonuses;
+    }
+
 }
+

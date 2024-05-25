@@ -6,13 +6,12 @@ public class EternalGoal : Goal
 
     public override int RecordEvent()
     {
-        // Since Eternal goals are never complete, there's no need to implement RecordEvent
         return 0;
     }
 
     public override bool IsComplete()
     {
-        return false; // Eternal goals are never complete
+        return false;
     }
 
     public override string GetStringRepresentation()

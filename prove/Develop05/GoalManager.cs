@@ -57,7 +57,7 @@ public class GoalManager
         string goalName = Console.ReadLine();
         Console.WriteLine();
 
-        Goal goalToUpdate = _goals.Find(goal => goal._shortName.Equals(goalName, StringComparison.OrdinalIgnoreCase));
+        Goal goalToUpdate = _goals.Find(goal => goal.GetShortName().Equals(goalName, StringComparison.OrdinalIgnoreCase));
         if (goalToUpdate != null)
         {
             try
@@ -113,8 +113,6 @@ public class GoalManager
                 }
             }
 
-            // Console.WriteLine();
-            // Console.WriteLine($"Total points earned: {totalPoints}");
             Console.WriteLine();
             Console.WriteLine("Goals loaded successfully.");
         }
@@ -145,14 +143,14 @@ public class GoalManager
                 foreach (Goal goal in _goals)
                 {
                     writer.WriteLine(goal.GetType().Name);
-                    writer.WriteLine(goal._shortName);
-                    writer.WriteLine(goal._description);
-                    writer.WriteLine(goal._points);
+                    writer.WriteLine(goal.GetShortName());
+                    writer.WriteLine(goal.GetDescription());
+                    writer.WriteLine(goal.GetPoints());
 
                     if (goal is ChecklistGoal checklistGoal)
                     {
-                        writer.WriteLine(checklistGoal._target);
-                        writer.WriteLine(checklistGoal._bonus);
+                        writer.WriteLine(checklistGoal.GetTarget());
+                        writer.WriteLine(checklistGoal.GetBonus());
                     }
                     else
                     {
