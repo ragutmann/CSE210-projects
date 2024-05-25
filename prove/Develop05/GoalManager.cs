@@ -41,6 +41,7 @@ public class GoalManager
                     break;
                 case "6":
                     Console.WriteLine("Quitting program...");
+                    Console.WriteLine();
                     return;
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
@@ -55,6 +56,7 @@ public class GoalManager
     {
         Console.WriteLine("Enter the name of the goal for which you want to record an event:");
         string goalName = Console.ReadLine();
+        Console.WriteLine();
 
         Goal goalToUpdate = _goals.Find(goal => goal._shortName.Equals(goalName));
         if (goalToUpdate != null)
@@ -66,6 +68,7 @@ public class GoalManager
         }
         else
         {
+            Console.WriteLine();
             Console.WriteLine("Goal not found.");
         }
     }
@@ -77,12 +80,14 @@ public class GoalManager
 
         try
         {
+            int totalPoints = 0; // Variable to store total points
+
             using (StreamReader reader = new StreamReader(filename))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    string type = line;
+                    string type = line.Trim(); // Trim whitespace
                     string name = reader.ReadLine();
                     string description = reader.ReadLine();
                     int points = int.Parse(reader.ReadLine());
@@ -90,13 +95,19 @@ public class GoalManager
                     int bonus = int.Parse(reader.ReadLine());
 
                     CreateGoal(type, name, description, points, target, bonus);
+                    Console.WriteLine();
+                    Console.WriteLine($"Goal \"{name}\" - Points Earned: {points}");
+                    totalPoints += points; // Accumulate points
                 }
             }
-
+            Console.WriteLine();
+            Console.WriteLine($"Total points earned: {totalPoints}");
+            Console.WriteLine();
             Console.WriteLine("Goals loaded successfully.");
         }
         catch (Exception ex)
         {
+            Console.WriteLine();
             Console.WriteLine($"Error loading goals: {ex.Message}");
         }
     }
@@ -189,14 +200,15 @@ public class GoalManager
                 _goals.Add(newGoal);
                 Console.WriteLine("Goal created successfully.");
                 break;
-            default:
-                Console.WriteLine("Invalid goal type.");
-                break;
+            // default:
+            //     Console.WriteLine("Invalid goal type.");
+            //     break;
         }
     }
 
     public void DisplayPlayerInfo()
     {
+        Console.WriteLine();
         Console.WriteLine($"Current Score: {_score}");
     }
 
@@ -257,18 +269,19 @@ public class GoalManager
 
     public void RecordEvent(string goalName)
     {
+        
         Goal goalToUpdate = _goals.Find(goal => goal._shortName.Equals(goalName));
         if (goalToUpdate != null)
         {
             int pointsEarned = goalToUpdate.RecordEvent();
             _score += pointsEarned;
             Console.WriteLine($"Event recorded for goal: {goalName}. You earned {pointsEarned} points.");
-            DisplayPlayerInfo();
         }
         else
         {
-            Console.WriteLine("Goal not found.");
+            Console.WriteLine("\nGoal not found.");
         }
+    Console.WriteLine();
     }
 
     // public void SaveGoals(string filename)
@@ -307,31 +320,31 @@ public class GoalManager
     //     }
     // }
 
-    public void LoadGoals(string filename)
-    {
-        try
-        {
-            using (StreamReader reader = new StreamReader(filename))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string type = line;
-                    string name = reader.ReadLine();
-                    string description = reader.ReadLine();
-                    int points = int.Parse(reader.ReadLine());
-                    int target = int.Parse(reader.ReadLine());
-                    int bonus = int.Parse(reader.ReadLine());
+    // public void LoadGoals(string filename)
+    // {
+    //     try
+    //     {
+    //         using (StreamReader reader = new StreamReader(filename))
+    //         {
+    //             string line;
+    //             while ((line = reader.ReadLine()) != null)
+    //             {
+    //                 string type = line;
+    //                 string name = reader.ReadLine();
+    //                 string description = reader.ReadLine();
+    //                 int points = int.Parse(reader.ReadLine());
+    //                 int target = int.Parse(reader.ReadLine());
+    //                 int bonus = int.Parse(reader.ReadLine());
 
-                    CreateGoal(type, name, description, points, target, bonus);
-                }
-            }
+    //                 CreateGoal(type, name, description, points, target, bonus);
+    //             }
+    //         }
 
-            Console.WriteLine("Goals loaded successfully.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading goals: {ex.Message}");
-        }
-    }
+    //         Console.WriteLine("Goals loaded successfully.");
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Console.WriteLine($"Error loading goals: {ex.Message}");
+    //     }
+    // }
 }
