@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 public class GoalManager
 {
@@ -46,10 +47,8 @@ public class GoalManager
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
                     break;
-
             }
         }
-        
     }
 
     private void RecordEvent()
@@ -58,17 +57,24 @@ public class GoalManager
         string goalName = Console.ReadLine();
         Console.WriteLine();
 
-        Goal goalToUpdate = _goals.Find(goal => goal._shortName.Equals(goalName));
+        Goal goalToUpdate = _goals.Find(goal => goal._shortName.Equals(goalName, StringComparison.OrdinalIgnoreCase));
         if (goalToUpdate != null)
         {
-            int pointsEarned = goalToUpdate.RecordEvent();
-            _score += pointsEarned;
-            Console.WriteLine($"Event recorded for goal: {goalName}. You earned {pointsEarned} points.");
-            DisplayPlayerInfo();
+            try
+            {
+                Console.WriteLine("Enter the points earned for the event:");
+                int pointsEarned = int.Parse(Console.ReadLine());
+                _score += pointsEarned;
+                Console.WriteLine($"Event recorded for goal: {goalName}. You earned {pointsEarned} points.");
+                DisplayPlayerInfo();
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid input. Please enter a valid integer for points.");
+            }
         }
         else
         {
-            Console.WriteLine();
             Console.WriteLine("Goal not found.");
         }
     }
@@ -78,16 +84,22 @@ public class GoalManager
         Console.WriteLine("Enter the filename to load goals from:");
         string filename = Console.ReadLine();
 
+        if (string.IsNullOrWhiteSpace(filename) || !File.Exists(filename))
+        {
+            Console.WriteLine("Invalid file path.");
+            return;
+        }
+
         try
         {
-            int totalPoints = 0; // Variable to store total points
+            int totalPoints = 0;
 
             using (StreamReader reader = new StreamReader(filename))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    string type = line.Trim(); // Trim whitespace
+                    string type = line.Trim();
                     string name = reader.ReadLine();
                     string description = reader.ReadLine();
                     int points = int.Parse(reader.ReadLine());
@@ -97,18 +109,26 @@ public class GoalManager
                     CreateGoal(type, name, description, points, target, bonus);
                     Console.WriteLine();
                     Console.WriteLine($"Goal \"{name}\" - Points Earned: {points}");
-                    totalPoints += points; // Accumulate points
+                    totalPoints += points;
                 }
             }
+
             Console.WriteLine();
             Console.WriteLine($"Total points earned: {totalPoints}");
             Console.WriteLine();
             Console.WriteLine("Goals loaded successfully.");
         }
+        catch (FileNotFoundException ex)
+        {
+            Console.WriteLine($"File not found: {ex.Message}");
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine($"Error reading file: {ex.Message}");
+        }
         catch (Exception ex)
         {
-            Console.WriteLine();
-            Console.WriteLine($"Error loading goals: {ex.Message}");
+            Console.WriteLine($"Error: {ex.Message}");
         }
     }
 
@@ -124,7 +144,7 @@ public class GoalManager
             {
                 foreach (Goal goal in _goals)
                 {
-                    writer.WriteLine(goal.GetType().Name); // Write the type of the goal
+                    writer.WriteLine(goal.GetType().Name);
                     writer.WriteLine(goal._shortName);
                     writer.WriteLine(goal._description);
                     writer.WriteLine(goal._points);
@@ -136,8 +156,8 @@ public class GoalManager
                     }
                     else
                     {
-                        writer.WriteLine("0"); // Placeholder for target
-                        writer.WriteLine("0"); // Placeholder for bonus
+                        writer.WriteLine("0");
+                        writer.WriteLine("0");
                     }
                 }
             }
@@ -165,7 +185,12 @@ public class GoalManager
         Console.WriteLine();
 
         Console.WriteLine("Enter the points for the goal:");
-        int points = int.Parse(Console.ReadLine());
+        int points = 0;
+        if (!int.TryParse(Console.ReadLine(), out points))
+        {
+            Console.WriteLine("Invalid input. Please enter a valid integer for points.");
+            return;
+        }
         Console.WriteLine();
 
         int target = 0;
@@ -173,39 +198,15 @@ public class GoalManager
         if (type.ToLower() == "checklist")
         {
             Console.WriteLine("Enter the target for the checklist goal:");
-            target = int.Parse(Console.ReadLine());
+            int.TryParse(Console.ReadLine(), out target);
             Console.WriteLine();
 
             Console.WriteLine("Enter the bonus for the checklist goal:");
-            bonus = int.Parse(Console.ReadLine());
+            int.TryParse(Console.ReadLine(), out bonus);
             Console.WriteLine();
         }
 
-        switch (type.ToLower())
-        {
-            case "simple":
-            case "eternal":
-            case "checklist":
-                Goal newGoal = null;
-                if (type.ToLower() == "simple")
-                {
-                    newGoal = new SimpleGoal(name, description, points);
-                }
-                else if (type.ToLower() == "eternal")
-                {
-                    newGoal = new EternalGoal(name, description, points);
-                }
-                else if (type.ToLower() == "checklist")
-                {
-                    newGoal = new ChecklistGoal(name, description, points, target, bonus);
-                }
-                _goals.Add(newGoal);
-                Console.WriteLine("Goal created successfully.");
-                break;
-            // default:
-            //     Console.WriteLine("Invalid goal type.");
-            //     break;
-        }
+        CreateGoal(type, name, description, points, target, bonus);
     }
 
     public void DisplayPlayerInfo()
@@ -224,17 +225,6 @@ public class GoalManager
         Console.WriteLine("4. Load Goals");
         Console.WriteLine("5. Record Event");
         Console.WriteLine("6. Quit");
-        Console.WriteLine();
-    }
-
-    public void ListGoalNames()
-    {
-        Console.WriteLine("Goal Names:");
-        Console.WriteLine();
-        foreach (Goal goal in _goals)
-        {
-            Console.WriteLine(goal._shortName);
-        }
         Console.WriteLine();
     }
 
@@ -263,90 +253,9 @@ public class GoalManager
                 _goals.Add(new ChecklistGoal(name, description, points, target, bonus));
                 Console.WriteLine("Checklist goal created successfully.");
                 break;
-            // default:
-            //     Console.WriteLine("Invalid goal type.");
-            //     break;
+            default:
+                Console.WriteLine("Invalid goal type.");
+                break;
         }
     }
-
-    public void RecordEvent(string goalName)
-    {
-        
-        Goal goalToUpdate = _goals.Find(goal => goal._shortName.Equals(goalName));
-        if (goalToUpdate != null)
-        {
-            int pointsEarned = goalToUpdate.RecordEvent();
-            _score += pointsEarned;
-            Console.WriteLine($"Event recorded for goal: {goalName}. You earned {pointsEarned} points.");
-        }
-        else
-        {
-            Console.WriteLine("\nGoal not found.");
-        }
-    Console.WriteLine();
-    }
-
-    // public void SaveGoals(string filename)
-    // {
-    //    try
-    //     {
-    //         using (StreamWriter writer = new StreamWriter(filename))
-    //         {
-    //             foreach (Goal goal in _goals)
-    //             {
-    //                 writer.WriteLine(goal.GetType().Name); // Write the type of the goal
-    //                 writer.WriteLine(goal._shortName);
-    //                 writer.WriteLine(goal._description);
-    //                 writer.WriteLine(goal._points);
-
-    //                 // If the goal is a ChecklistGoal, write target and bonus values
-    //                 if (goal is ChecklistGoal checklistGoal)
-    //                 {
-    //                     writer.WriteLine(checklistGoal._target);
-    //                     writer.WriteLine(checklistGoal._bonus);
-    //                 }
-    //                 else
-    //                 {
-    //                     // For other types of goals, write default values
-    //                     writer.WriteLine("0"); // Placeholder for target
-    //                     writer.WriteLine("0"); // Placeholder for bonus
-    //                 }
-    //             }
-    //         }
-
-    //         Console.WriteLine("Goals saved successfully.");
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Console.WriteLine($"Error saving goals: {ex.Message}");
-    //     }
-    // }
-
-    // public void LoadGoals(string filename)
-    // {
-    //     try
-    //     {
-    //         using (StreamReader reader = new StreamReader(filename))
-    //         {
-    //             string line;
-    //             while ((line = reader.ReadLine()) != null)
-    //             {
-    //                 string type = line;
-    //                 string name = reader.ReadLine();
-    //                 string description = reader.ReadLine();
-    //                 int points = int.Parse(reader.ReadLine());
-    //                 int target = int.Parse(reader.ReadLine());
-    //                 int bonus = int.Parse(reader.ReadLine());
-
-    //                 CreateGoal(type, name, description, points, target, bonus);
-    //             }
-    //         }
-
-    //         Console.WriteLine("Goals loaded successfully.");
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Console.WriteLine($"Error loading goals: {ex.Message}");
-    //     }
-    // }
 }
