@@ -1,27 +1,28 @@
+using System;
+
 public class Address
 {
-    private string streetAddress;
+    private string street;
     private string city;
-    private string stateProvince;
+    private string state;
     private string country;
 
-    public Address(string streetAddress, string city, string stateProvince, string country)
+    public Address(string street, string city, string state, string country)
     {
-        this.streetAddress = streetAddress;
+        this.street = street;
         this.city = city;
-        this.stateProvince = stateProvince;
+        this.state = state;
         this.country = country;
     }
 
-    public bool IsInUSA()
+    public bool IsUSA()
     {
-        return country.Equals("USA", StringComparison.OrdinalIgnoreCase);
+        return country.ToLower() == "usa";
     }
 
-    public string GetFullAddress()
+    public override string ToString()
     {
-        return $"{streetAddress}\n{city}, {stateProvince}\n{country}";
+        return $"{street}\n{city}, {state}\n{country}";
     }
-
-    // Other getters and setters as needed
 }
+

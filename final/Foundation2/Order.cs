@@ -4,13 +4,13 @@ using System.Linq;
 
 public class Order
 {
-    private List<Product> products;
     private Customer customer;
+    private List<Product> products;
 
     public Order(Customer customer)
     {
-        products = new List<Product>();
         this.customer = customer;
+        this.products = new List<Product>();
     }
 
     public void AddProduct(Product product)
@@ -18,25 +18,21 @@ public class Order
         products.Add(product);
     }
 
-    public double CalculateTotalPrice()
+    public double TotalCost()
     {
-        double totalProductCost = products.Sum(p => p.GetTotalCost());
-        double shippingCost = customer.IsInUSA() ? 5 : 35;
-        return totalProductCost + shippingCost;
+        double total = products.Sum(product => product.TotalCost());
+        double shippingCost = customer.IsUSA() ? 5 : 35;
+        return total + shippingCost;
     }
 
-    public string GetPackingLabel()
+    public string PackingLabel()
     {
-        string label = "";
-        foreach (var product in products)
-        {
-            label += $"Name: {product.name}, ID: {product.productId}\n";
-        }
-        return label;
+        return string.Join("\n", products.Select(product => product.ToString()));
     }
 
-    public string GetShippingLabel()
+    public string ShippingLabel()
     {
-        return customer.GetFullAddress();
+        return customer.ToString();
     }
 }
+

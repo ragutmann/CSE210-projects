@@ -9,10 +9,13 @@ public class Customer
         this.address = address;
     }
 
-    public bool IsInUSA()
+    public bool IsUSA()
     {
-        return address.IsInUSA();
+        return address.IsUSA();
     }
 
-    // Other getters and setters as needed
+    public override string ToString()
+    {
+        return $"Customer: {name}\n{address}";
+    }
 }

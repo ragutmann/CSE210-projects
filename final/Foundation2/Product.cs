@@ -1,11 +1,11 @@
 public class Product
 {
-    public string name { get; set; }
-    protected string productId;
+    private string name;
+    private int productId;
     private double price;
     private int quantity;
 
-    public Product(string name, string productId, double price, int quantity)
+    public Product(string name, int productId, double price, int quantity)
     {
         this.name = name;
         this.productId = productId;
@@ -13,10 +13,14 @@ public class Product
         this.quantity = quantity;
     }
 
-    public double GetTotalCost()
+    public double TotalCost()
     {
         return price * quantity;
     }
 
-    // Other getters and setters as needed
+    public override string ToString()
+    {
+        return $"{name} (ID: {productId}) - ${price:F2} x {quantity} = ${TotalCost():F2}";
+    }
 }
+
