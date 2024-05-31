@@ -1,7 +1,13 @@
 public class Activity
 {
-    public string Date { get; set; }
-    public int Duration { get; set; }
+    protected string Date { get; set; }
+    protected int Duration { get; set; }
+
+    public Activity(string date, int duration)
+    {
+        Date = date;
+        Duration = duration;
+    }
 
     public virtual string GetDistance()
     {
@@ -24,3 +30,4 @@ public class Activity
                $"Distance: {GetDistance()}, Speed: {GetSpeed()}, Pace: {GetPace()}";
     }
 }
+

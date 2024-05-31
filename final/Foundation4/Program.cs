@@ -7,10 +7,10 @@ class Program
     {
         List<Activity> activities = new List<Activity>
         {
-            new Running { Date = "03 Nov 2022", Duration = 30, Distance = 3.0 },
-            new Running { Date = "03 Nov 2022", Duration = 30, Distance = 4.8 },
-            new Cycling { Date = "03 Nov 2022", Duration = 30, Speed = 12 },
-            new Swimming { Date = "03 Nov 2022", Duration = 30, Laps = 10 }
+            new Running("03 Nov 2022", 30, 3.0),
+            new Running("03 Nov 2022", 30, 4.8),
+            new Cycling("03 Nov 2022", 30, 12),
+            new Swimming("03 Nov 2022", 30, 10)
         };
 
         foreach (var activity in activities)

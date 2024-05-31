@@ -1,6 +1,11 @@
 public class Swimming : Activity
 {
-    public int Laps { get; set; }
+    private int Laps { get; set; }
+
+    public Swimming(string date, int duration, int laps) : base(date, duration)
+    {
+        Laps = laps;
+    }
 
     public override string GetDistance()
     {
@@ -17,3 +22,4 @@ public class Swimming : Activity
         return $"{Math.Round(Duration / (Laps * 50 / 1000.0), 2)} min per km";
     }
 }
+

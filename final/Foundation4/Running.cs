@@ -1,6 +1,11 @@
 public class Running : Activity
 {
-    public double Distance { get; set; }
+    private double Distance { get; set; }
+
+    public Running(string date, int duration, double distance) : base(date, duration)
+    {
+        Distance = distance;
+    }
 
     public override string GetDistance()
     {
@@ -17,3 +22,4 @@ public class Running : Activity
         return $"{Math.Round(Duration / Distance, 2)} min per mile";
     }
 }
+

@@ -1,6 +1,11 @@
 public class Cycling : Activity
 {
-    public int Speed { get; set; }
+    private int Speed { get; set; }
+
+    public Cycling(string date, int duration, int speed) : base(date, duration)
+    {
+        Speed = speed;
+    }
 
     public override string GetSpeed()
     {
@@ -17,4 +22,5 @@ public class Cycling : Activity
         return $"{Math.Round(60.0 / Speed, 2)} min per mile";
     }
 }
+
 
