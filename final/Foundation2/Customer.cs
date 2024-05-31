@@ -16,6 +16,6 @@ public class Customer
 
     public override string ToString()
     {
-        return $"Customer: {name}\n{address}";
+        return $"{name}\n{address}";
     }
 }

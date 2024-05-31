@@ -22,7 +22,7 @@ public class Address
 
     public override string ToString()
     {
-        return $"{street}\n{city}, {state}\n{country}";
+        return $"{street}\n{city}, {state}, {country}";
     }
 }
 
